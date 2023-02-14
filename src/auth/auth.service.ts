@@ -24,8 +24,12 @@ export class AuthService {
     try {
       const user = await this.prisma.user.create({
         data: {
+          createdAt:new Date(),
+          updatedAt:new Date(),
           email: dto.email,
           hash,
+          firstName:  dto.firstName,
+          lastName: dto.lastName
         },
       });
 
@@ -73,7 +77,7 @@ export class AuthService {
   }
 
   async signToken(
-    userId: number,
+    userId: string,
     email: string,
   ): Promise<{ access_token: string }> {
     const payload = {
@@ -85,7 +89,7 @@ export class AuthService {
     const token = await this.jwt.signAsync(
       payload,
       {
-        expiresIn: '15m',
+        expiresIn: '180d',
         secret: secret,
       },
     );

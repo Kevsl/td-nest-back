@@ -1,14 +1,48 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import {
+  SwaggerModule,
+  DocumentBuilder,
+} from '@nestjs/swagger';
+import helmet from 'helmet';
+import csurf from 'csurf';
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+    app.use(helmet());
+    app.use(csurf());
+
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
     }),
   );
-  await app.listen(3333);
-}
+  
+  const config = new DocumentBuilder()
+    .setTitle('Yellow Submarine')
+    .setDescription('The cats API description')
+    .setVersion('1.0')
+    .addTag('Auth')
+    .addTag('Users')
+    .addTag('Journee')
+    .addTag('Semaine')
+    .addTag('Bi-semaine')
+    .addTag('Tri-semaine')
+    .addTag('Mois')
+    .addTag('Annee')
+    .addTag('Entreprise')
+    .addTag('Infractions')
+    .addTag('Chronomode')
+
+    .build();
+  const document = SwaggerModule.createDocument(
+    app,
+    config,
+  );
+  SwaggerModule.setup('api', app, document);
+  await app.listen(6173);
+} 
 bootstrap();

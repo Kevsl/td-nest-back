@@ -12,7 +12,7 @@ import {
 export class BookmarkService {
   constructor(private prisma: PrismaService) {}
 
-  getBookmarks(userId: number) {
+  getBookmarks(userId: string) {
     return this.prisma.bookmark.findMany({
       where: {
         userId,
@@ -21,7 +21,7 @@ export class BookmarkService {
   }
 
   getBookmarkById(
-    userId: number,
+    userId: string,
     bookmarkId: number,
   ) {
     return this.prisma.bookmark.findFirst({
@@ -33,7 +33,7 @@ export class BookmarkService {
   }
 
   async createBookmark(
-    userId: number,
+    userId: string,
     dto: CreateBookmarkDto,
   ) {
     const bookmark =
@@ -48,7 +48,7 @@ export class BookmarkService {
   }
 
   async editBookmarkById(
-    userId: number,
+    userId: string,
     bookmarkId: number,
     dto: EditBookmarkDto,
   ) {
@@ -77,7 +77,7 @@ export class BookmarkService {
   }
 
   async deleteBookmarkById(
-    userId: number,
+    userId: string,
     bookmarkId: number,
   ) {
     const bookmark =

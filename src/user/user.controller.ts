@@ -10,7 +10,14 @@ import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
 import { EditUserDto } from './dto';
 import { UserService } from './user.service';
+import {
+  ApiAcceptedResponse,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
+
+@ApiTags('users')
 @UseGuards(JwtGuard)
 @Controller('users')
 export class UserController {
@@ -22,7 +29,7 @@ export class UserController {
 
   @Patch()
   editUser(
-    @GetUser('id') userId: number,
+    @GetUser('id') userId: string,
     @Body() dto: EditUserDto,
   ) {
     return this.userService.editUser(userId, dto);
