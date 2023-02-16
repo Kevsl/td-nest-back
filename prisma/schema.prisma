@@ -18,39 +18,31 @@ model User {
   email String @unique
   hash  String
 
+  tel String? @unique 
+
   firstName String?
   lastName  String?
+
+  stat Int?
 
 
   @@map("users")
 }
 
-model Bookmark {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model meeting {
+  id_meeting  String     @id @default(uuid())
 
-  title       String
-  description String?
-  link        String
+  title String?
 
-  userId String
-  // user   User @relation(fields: [userId], references: [id])
+  contact String?
 
-  @@map("bookmarks")
-}
+  start DateTime  
 
+  end DateTime
 
-
-
-model journee {
-  id_journee Int @id @default(autoincrement())
-  conduite_journee Int
-  service_journee Int
-  repos_journee Int
-  debut_journee DateTime  @default(now())
-  fin_journee DateTime     @default(now())
   utilisateur_id String
 
 }
+
+
 

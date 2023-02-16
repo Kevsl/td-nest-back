@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service'
+import { User } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { EditUserDto } from './dto';
 
 @Injectable()
@@ -22,5 +23,21 @@ export class UserService {
     delete user.hash;
 
     return user;
+  }
+
+  async getUsers() {
+    const users = await this.prisma.user.findMany(
+      {
+        select: {
+          id: true,
+          email: true,
+          tel: true,
+          stat: true,
+          firstName: true,
+          lastName: true,
+        },
+      },
+    );
+    return users;
   }
 }

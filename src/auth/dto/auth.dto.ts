@@ -4,7 +4,10 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsNumber,
 } from 'class-validator';
+import { Transform } from 'class-transformer';
+
 import { ApiProperty } from '@nestjs/swagger';
 export class AuthDto {
   @IsEmail()
@@ -34,4 +37,13 @@ export class AuthDto {
   @IsOptional()
   @IsString()
   lastName?: string;
+
+  @Transform(({ value }) => Number(value))
+  @IsNumber()
+  @IsOptional()
+  stat: number;
+
+  @IsOptional()
+  @IsString()
+  tel?: string;
 }

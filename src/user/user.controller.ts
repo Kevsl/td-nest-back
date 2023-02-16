@@ -16,22 +16,28 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-
 @ApiTags('users')
-@UseGuards(JwtGuard)
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
+
+  @UseGuards(JwtGuard)
   @Get('me')
   getMe(@GetUser() user: User) {
     return user;
   }
 
+  @UseGuards(JwtGuard)
   @Patch()
   editUser(
     @GetUser('id') userId: string,
     @Body() dto: EditUserDto,
   ) {
     return this.userService.editUser(userId, dto);
+  }
+
+  @Get('all')
+  getAllusers() {
+    return this.userService.getUsers();
   }
 }

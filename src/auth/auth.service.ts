@@ -24,12 +24,14 @@ export class AuthService {
     try {
       const user = await this.prisma.user.create({
         data: {
-          createdAt:new Date(),
-          updatedAt:new Date(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
           email: dto.email,
           hash,
-          firstName:  dto.firstName,
-          lastName: dto.lastName
+          firstName: dto.firstName,
+          lastName: dto.lastName,
+          stat: dto.stat,
+          tel: dto.tel,
         },
       });
 
